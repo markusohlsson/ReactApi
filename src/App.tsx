@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { Nav } from './components/Nav/Nav';
+import { Products } from './components/Products/Products';
+import { cartItem } from './models/cartItem';
+import { IProductSmall } from './models/IProductSmall';
 
 function App() {
+  const [cart,setCart] = useState<cartItem[]>([]);
+
+const addProductToCart = (product:IProductSmall) =>{
+  setCart([...cart, new cartItem(product,1)]);
+};
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <Nav cart={cart}></Nav>
       </header>
+      <main>
+        <Products addProductToCart={addProductToCart}></Products>
+      </main>
+      <footer>Footer</footer>
     </div>
   );
 }
